@@ -33,12 +33,13 @@ static int	get_height(char *path, size_t *height)
 	}
 	free(line);
 	close(fd);
-	if (ret_gnl != 0)
-	{
+	if (ret_gnl == 0)
+		return (0);
+	else if (ret_gnl == -1)
 		error_print(READ_ERROR);
-		return (1);
-	}
-	return (0);
+	else if (ret_gnl != 0)
+		error_print(MAP_ERROR);
+	return (1);
 }
 
 static int	get_map(char *path, size_t height, char ***map)
@@ -50,6 +51,7 @@ static int	get_map(char *path, size_t height, char ***map)
 	if (fd == -1)
 		return (1);
 	*map = (char **)malloc(sizeof(char *) * (height + 1));
+	(*map)[height] = NULL;
 	if (*map == NULL)
 	{
 		error_print(MALLOC_ERROR);
@@ -65,35 +67,46 @@ static int	get_map(char *path, size_t height, char ***map)
 		}
 		i++;
 	}
-	map[i] = NULL;
 	return (0);
 }
 
-static size_t	get_width(char *map)
+static int	extension_check(char *filepath, char *extension)
 {
-	return (ft_strlen(map));
+	size_t	file_len;
+	size_t	ext_len;
+
+	file_len = ft_strlen(filepath);
+	ext_len = ft_strlen(extension);
+	if (file_len < ext_len)
+	{
+		error_print(EXTENSION_ERROR);
+		return (1);
+	}
+	while (extension[ext_len] == filepath[file_len])
+	{
+		if (ext_len == 0)
+			return (0);
+		ext_len--;
+		file_len--;
+	}
+	error_print(EXTENSION_ERROR);
+	return (1);
 }
 
-void	map_input(char *path, t_map **map)
+int	map_input(char *path, t_map *map)
 {
-	*map = (t_map *)malloc(sizeof(map));
-	if (*map == NULL)
+	if (extension_check(path, ".ber") == 1)
+		return (1);
+	if (get_height(path, &map->height) == 1)
+		return (1);
+	if (get_map(path, map->height, &map->map) == 1)
 	{
-		error_print(MALLOC_ERROR);
-		exit(1);
+		free_map(map);
+		error_print(MAP_ERROR);
+		return (1);
 	}
-	if (get_height(path, &(*map)->height) == 1)
-	{
-		free(*map);
-		exit(1);
-	}
-	if (get_map(path, (*map)->height, &(*map)->map) == 1)
-	{
-		free_map(*map);
-		exit(1);
-	}
-	(*map)->width = get_width((*map)->map[0]);
-	printf("height = [%ld], width = [%ld]\n", (*map)->height, (*map)->width);
-	for (int i = 0; i < (*map)->height; i++)
-		printf("[%s]\n", (*map)->map[i]);
+	map->width = ft_strlen(map->map[0]);
+	printf("map: height = [%ld], width = [%ld]\n", map->height, map->width);
+	for (int i = 0; i < map->height; i++)
+		printf("[%s]\n", map->map[i]);
 }

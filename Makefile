@@ -11,7 +11,8 @@ CC = gcc
 CFLAGS = $(INCLUDE) #-Wall -Werror -Wextra
 INCLUDE = -I includes/ -I $(LIB_DIR)/includes/ -I $(MLX_DIR)/
 DEBUG = -g -fsanitize=address
-LIBFLAGS = -L $(LIB_DIR) -lft
+MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm
+LIB_FLAGS = -L$(LIB_DIR) -lft
 # Source files
 # ****************************************************************************
 
@@ -22,8 +23,15 @@ MAIN_SRCS	 =	$(addprefix $(MAIN_DIR), $(MAIN_FILES))
 
 INPUT_DIR	=	input/
 INPUT_FILES	=	map_input.c \
+				tex_input.c \
 				#xxxx.c
 INPUT_SRCS =	$(addprefix $(INPUT_DIR), $(INPUT_FILES))
+
+DRAW_DIR 	=	draw/
+DRAW_FILES	=	game_draw.c \
+				mlx_utils.c \
+				#xxxx.c
+DRAW_SRCS	=	$(addprefix $(DRAW_DIR), $(DRAW_FILES))
 
 ERROR_DIR 	=	error/
 ERROR_FILES	=	error_print.c \
@@ -33,6 +41,7 @@ ERROR_SRCS	=	$(addprefix $(ERROR_DIR), $(ERROR_FILES))
 
 SRC_FILES =			$(MAIN_SRCS) \
 					$(INPUT_SRCS) \
+					$(DRAW_SRCS) \
 					$(ERROR_SRCS) \
 
 # addprefix
@@ -43,6 +52,7 @@ OBJ_DIR = objs/
 OBJS = $(SRC_FILES:%.c=$(OBJ_DIR)%.o)
 MAIN_OBJS = $(MAIN_FILES:%.c=$(OBJ_DIR)main/%.o)
 INPUT_OBJS = $(INPUT_FILES:%.c=$(OBJ_DIR)input/%.o)
+DRAW_OBJS = $(DRAW_FILES:%.c=$(OBJ_DIR)draw/%.o)
 ERROR_OBJS = $(ERROR_FILES:%.c=$(OBJ_DIR)error/%.o)
 
 # Recipe
@@ -52,7 +62,8 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C $(LIB_DIR)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
+	make -C $(MLX_DIR)
+	$(CC) $(CFLAGS) $(OBJS) $(LIB_FLAGS) $(MLX_FLAGS) -o $(NAME)
 
 $(OBJS): $(OBJ_DIR)
 
@@ -63,6 +74,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(OBJ_DIR)$(MAIN_DIR)
 	mkdir -p $(OBJ_DIR)$(INPUT_DIR)
+	mkdir -p $(OBJ_DIR)$(DRAW_DIR)
 	mkdir -p $(OBJ_DIR)$(ERROR_DIR)
 	mkdir -p $(OBJ_DIR)$(ECHO_DIR)
 
@@ -71,11 +83,13 @@ debug: $(LIBFT) $(OBJS)
 
 clean:
 	make clean -C $(LIB_DIR)
+	make clean -C $(MLX_DIR)
 	rm -rf $(OBJ_DIR)
 	rm -fr *.dSYM
 
 fclean:
 	make fclean -C $(LIB_DIR)
+	make clean -C $(MLX_DIR)
 	rm -rf $(NAME) $(OBJ_DIR)
 	rm -fr *.dSYM
 
