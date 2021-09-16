@@ -18,6 +18,8 @@ LIB_FLAGS = -L$(LIB_DIR) -lft
 
 MAIN_DIR	=	main/
 MAIN_FILES	=	main.c \
+				game_key.c \
+				map_validate.c \
 				#xxxx.c
 MAIN_SRCS	 =	$(addprefix $(MAIN_DIR), $(MAIN_FILES))
 

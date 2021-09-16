@@ -1,57 +1,75 @@
 #include "so_long.h"
 #include "sl_config.h"
 
-int	create_trgb(int t, int r, int g, int b)
+static void	draw_player_2(t_img *img, t_sys *sys, int n, int i)
 {
-	return (t << 24 | r << 16 | g << 8 | b);
+	if (sys->pl_dir == KEY_W)
+		draw_tex(img, &sys->player_up[1], n * TEX_SIZE, i * TEX_SIZE);
+	else if (sys->pl_dir == KEY_A)
+		draw_tex(img, &sys->player_left[1], n * TEX_SIZE, i * TEX_SIZE);
+	else if (sys->pl_dir == KEY_S)
+		draw_tex(img, &sys->player_down[1], n * TEX_SIZE, i * TEX_SIZE);
+	else if (sys->pl_dir == KEY_D)
+		draw_tex(img, &sys->player_right[1], n * TEX_SIZE, i * TEX_SIZE);
 }
 
-void	draw_tex(t_img *img, t_img *tex, int x, int y)
+static void	draw_player(t_img *img, t_sys *sys, int n, int i)
+{
+	static int	frame;
+
+	if (frame < 200)
+	{
+		if (sys->pl_dir == KEY_W)
+			draw_tex(img, &sys->player_up[0], n * TEX_SIZE, i * TEX_SIZE);
+		else if (sys->pl_dir == KEY_A)
+			draw_tex(img, &sys->player_left[0], n * TEX_SIZE, i * TEX_SIZE);
+		else if (sys->pl_dir == KEY_S)
+			draw_tex(img, &sys->player_down[0], n * TEX_SIZE, i * TEX_SIZE);
+		else if (sys->pl_dir == KEY_D)
+			draw_tex(img, &sys->player_right[0], n * TEX_SIZE, i * TEX_SIZE);
+	}
+	else
+		draw_player_2(img, sys, n, i);
+	if (frame == 400)
+		frame = 0;
+	frame++;
+}
+
+static void	draw_collect(t_img *img, t_sys *sys, int n, int i)
+{
+	static int	frame;
+
+	if (frame < 200)
+		draw_tex(img, &sys->collect[0], n * TEX_SIZE, i * TEX_SIZE);
+	else
+		draw_tex(img, &sys->collect[1], n * TEX_SIZE, i * TEX_SIZE);
+	if (frame == 400)
+		frame = 0;
+	frame++;
+}
+
+int	draw_map(t_map *map, t_img *img, t_sys *sys)
 {
 	int	i;
 	int	n;
-	float tex_x;
-	float tex_y;
-	int	color;
 
 	i = 0;
-	while (i < TEX_SIZE)
+	while (map->map[i] != NULL)
 	{
 		n = 0;
-		while (n < TEX_SIZE)
+		while (map->map[i][n] != '\0')
 		{
-			// tex_x = (float)i / (float)TEX_SIZE;
-			// tex_y = (float)n / (float)TEX_SIZE;
-			// color = (get_pixel(tex, (int)(tex_x * tex->img_width), (int)(tex_y * tex->img_height)));
-			// if (color != (int)0xFF000000)
-				// my_mlx_pixel_put(img, x + i, y + n, color);
-			// color = get_pixel(tex, i, n);
-			color = 0xf5deb3;
-			if ((int)color != 0xFF000000)
-				my_mlx_pixel_put(img, x + i, y + n, color);
+			draw_tex(img, &sys->tile, n * TEX_SIZE, i * TEX_SIZE);
+			if (map->map[i][n] == '1')
+				draw_tex(img, &sys->wall, n * TEX_SIZE, i * TEX_SIZE);
+			if (map->map[i][n] == 'C')
+				draw_collect(img, sys, n, i);
+			if (map->pl_y == i && map->pl_x == n)
+				draw_player(img, sys, n, i);
+			if (map->map[i][n] == 'E')
+				draw_tex(img, &sys->wall, n * TEX_SIZE, i * TEX_SIZE);
 			n++;
 		}
 		i++;
 	}
-}
-
-int	draw_tile(char **map, t_img *img, t_img *tile_tex)
-{
-	int	i;
-	int	n;
-
-	i = 0;
-	// while (map[i] != NULL)
-	// {
-		n = 0;
-	// 	while (map[i][n] != '\0')
-	// 	{
-			// if (map[i][n] == '1')
-			draw_tex(img, tile_tex, i * TEX_SIZE, n * TEX_SIZE);
-			// else
-				// draw_tex(&sys->img, &sys->wall_tex, i * TEX_SIZE, n * TEX_SIZE);
-	// 		n++;
-	// 	}
-	// 	i++;
-	// }
 }

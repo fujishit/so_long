@@ -12,7 +12,7 @@
 typedef struct s_img
 {
 	void		*img;
-	int			*addr;
+	char		*addr;
 	int			size_l;
 	int			bpp;
 	int			endian;
@@ -27,9 +27,14 @@ typedef struct	s_sys
 	int		win_height;
 	int		win_width;
 	t_img	img;
-	t_img	player_tex;
-	t_img	wall_tex;
-	t_img	tile_tex;
+	t_img	player_up[2];
+	t_img	player_right[2];
+	t_img	player_left[2];
+	t_img	player_down[2];
+	t_img	collect[2];
+	t_img	wall;
+	t_img	tile;
+	int		pl_dir;
 }	t_sys;
 
 typedef struct	s_map
@@ -37,6 +42,8 @@ typedef struct	s_map
 	char	**map;
 	size_t	height;
 	size_t	width;
+	size_t	pl_x;
+	size_t	pl_y;
 }	t_map;
 
 typedef struct	s_game
@@ -45,14 +52,13 @@ typedef struct	s_game
 	t_sys	sys;
 }	t_game;
 
-int		get_pixel(t_img *img, int x, int y);
-void	get_color(t_img *img, int x, int y, int c);
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-
 void	error_print(int error);
 int		tex_input(t_sys *sys);
 int		map_input(char *path, t_map *map);
-int		draw_tile(char **map, t_img *img, t_img *tile_tex);
+void	draw_tex(t_img *img, t_img *tex, int x, int y);
+int		game_key(int keycode, t_game *game);
+int		map_validate(t_map *map);
+int		draw_map(t_map *map, t_img *img, t_sys *sys);
 void	free_map(t_map *map);
 
 #endif /* SO_LONG_H */
