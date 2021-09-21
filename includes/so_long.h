@@ -34,6 +34,7 @@ typedef struct	s_sys
 	t_img	collect[2];
 	t_img	wall;
 	t_img	tile;
+	t_img	goal;
 	int		pl_dir;
 }	t_sys;
 
@@ -50,6 +51,7 @@ typedef struct	s_game
 {
 	t_map	map;
 	t_sys	sys;
+	size_t	count;
 }	t_game;
 
 void	error_print(int error);
@@ -58,7 +60,7 @@ int		map_input(char *path, t_map *map);
 void	draw_tex(t_img *img, t_img *tex, int x, int y);
 int		game_key(int keycode, t_game *game);
 int		map_validate(t_map *map);
-int		draw_map(t_map *map, t_img *img, t_sys *sys);
+int		draw_map(t_map *map, t_img *img, t_sys *sys, int frame);
 void	free_map(t_map *map);
 
 #endif /* SO_LONG_H */

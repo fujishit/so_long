@@ -106,8 +106,9 @@ int	map_input(char *path, t_map *map)
 		return (1);
 	}
 	map->width = ft_strlen(map->map[0]);
-	// debug
-	printf("map: height = [%ld], width = [%ld]\n", map->height, map->width);
-	for (int i = 0; i < map->height; i++)
-		printf("[%s]\n", map->map[i]);
 }
+
+	// debug
+	// printf("map: height = [%ld], width = [%ld]\n", map->height, map->width);
+	// for (int i = 0; i < map->height; i++)
+	// 	printf("[%s]\n", map->map[i]);

@@ -21,6 +21,6 @@
 # define COLLECT2 "./texture/collect/baloon2.xpm"
 # define WALL1 "./texture/wall/wood_wall1.xpm"
 # define TILE1 "./texture/tile/grass_tile1.xpm"
-// # define ITEM "./texture/grass_tile1.xpm"
+# define GOAL1 "./texture/goal/home.xpm"
 
 #endif

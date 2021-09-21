@@ -16,8 +16,6 @@ int	mlx_setup(t_sys *sys, t_map map)
 	}
 	sys->win_height = map.height * TEX_SIZE;
 	sys->win_width = map.width * TEX_SIZE;
-	// debug
-	printf("window: height = %d, width = %d\n", sys->win_height, sys->win_width);
 	sys->win = mlx_new_window(\
 		sys->mlx, sys->win_width, sys->win_height, "so_long");
 	if (sys->win == NULL)
@@ -34,12 +32,20 @@ int	mlx_setup(t_sys *sys, t_map map)
 	sys->img.addr = mlx_get_data_addr(\
 		sys->img.img, &sys->img.bpp, &sys->img.size_l, &sys->img.endian);
 }
+	// debug
+	// printf("window: height = %d, 
+	// width = %d\n", sys->win_height, sys->win_width);
 
 int	game_loop(t_game *game)
 {
-	draw_map(&game->map, &game->sys.img, &game->sys);
+	static int	frame;
+
+	draw_map(&game->map, &game->sys.img, &game->sys, frame);
 	mlx_put_image_to_window(\
 		game->sys.mlx, game->sys.win, game->sys.img.img, 0, 0);
+	if (frame == 400)
+		frame = 0;
+	frame++;
 }
 
 int	main(int argc, char *argv[])
@@ -58,6 +64,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (map_validate(&game.map) == 1)
 		return (1);
+	game.count = 0;
 	mlx_loop_hook(game.sys.mlx, game_loop, &game);
 	mlx_hook(game.sys.win, 2, 1L << 0, game_key, &game);
 	mlx_hook(game.sys.win, 33, 1L << 17, close_window, &game);
