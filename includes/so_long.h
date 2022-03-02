@@ -20,6 +20,20 @@ typedef struct s_img
 	int			img_height;
 }	t_img;
 
+typedef struct s_num
+{
+	t_img	num0;
+	t_img	num1;
+	t_img	num2;
+	t_img	num3;
+	t_img	num4;
+	t_img	num5;
+	t_img	num6;
+	t_img	num7;
+	t_img	num8;
+	t_img	num9;
+}	t_num;
+
 typedef struct	s_sys
 {
 	void	*mlx;
@@ -27,6 +41,7 @@ typedef struct	s_sys
 	int		win_height;
 	int		win_width;
 	t_img	img;
+	t_num	num;
 	t_img	player_up[2];
 	t_img	player_right[2];
 	t_img	player_left[2];
@@ -38,6 +53,13 @@ typedef struct	s_sys
 	int		pl_dir;
 }	t_sys;
 
+typedef struct	s_enemy
+{
+	size_t	en_x;
+	size_t	en_y;
+	int		en_dir;
+}	t_enemy;
+
 typedef struct	s_map
 {
 	char	**map;
@@ -45,6 +67,9 @@ typedef struct	s_map
 	size_t	width;
 	size_t	pl_x;
 	size_t	pl_y;
+	size_t	item;
+	size_t	enemy;
+	t_enemy	*enemys;
 }	t_map;
 
 typedef struct	s_game
@@ -59,8 +84,13 @@ int		tex_input(t_sys *sys);
 int		map_input(char *path, t_map *map);
 void	draw_tex(t_img *img, t_img *tex, int x, int y);
 int		game_key(int keycode, t_game *game);
+void	draw_count(t_sys *sys, t_num *num, size_t width, size_t count);
+int		map_check(t_map *m, char **map);
 int		map_validate(t_map *map);
 int		draw_map(t_map *map, t_img *img, t_sys *sys, int frame);
+void	draw_count(t_sys *sys, t_num *num, size_t width, size_t count);
+void	enemy_move(t_map *map);
+void	abend_game(t_game *game);
 void	free_map(t_map *map);
 
 #endif /* SO_LONG_H */

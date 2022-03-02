@@ -26,6 +26,44 @@ static int	map_isvalid(t_map *m)
 	}
 }
 
+#ifdef BONUS
+
+static int	chr_isvalid(char c)
+{
+	if (c == '0')
+		return (0);
+	else if (c == '1')
+		return (0);
+	else if (c == 'C')
+		return (0);
+	else if (c == 'E')
+		return (0);
+	else if (c == 'P')
+		return (0);
+	else if (c == 'T')
+		return (0);
+	return (1);
+}
+
+#else
+
+static int	chr_isvalid(char c)
+{
+	if (c == '0')
+		return (0);
+	else if (c == '1')
+		return (0);
+	else if (c == 'C')
+		return (0);
+	else if (c == 'E')
+		return (0);
+	else if (c == 'P')
+		return (0);
+	return (1);
+}
+
+#endif
+
 int	map_check(t_map *m, char **map)
 {
 	size_t	y;
@@ -39,8 +77,7 @@ int	map_check(t_map *m, char **map)
 			x++;
 		while (map[y][x] != '\0')
 		{
-			if (map[y][x] != '0' && map[y][x] != '1' && map[y][x] != ' ' && \
-				map[y][x] != 'C' && map[y][x] != 'E' && map[y][x] != 'P')
+			if (chr_isvalid(map[y][x]) == 1)
 				return (1);
 			x++;
 		}

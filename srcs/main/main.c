@@ -40,12 +40,53 @@ int	mlx_setup(t_sys *sys, t_map map)
 	// 	game->count = 9999999999999;
 	// }
 
+static void	draw_enemy(t_sys *sys, int frame, t_map *map)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < map->enemy)
+	{
+		// draw_tex(img, &sys->player_up[0], n * TEX_SIZE, i * TEX_SIZE);
+		draw_tex(&sys->img, &sys->player_up[0], map->enemys[i].en_x * TEX_SIZE, map->enemys[i].en_y * TEX_SIZE);
+		i++;
+	}
+}
+
+static void	draw_player(t_sys *sys, int frame, int n, int i)
+{
+	if (frame < ANIME_FRAME)
+	{
+		if (sys->pl_dir == KEY_W)
+			draw_tex(&sys->img, &sys->player_up[0], n, i);
+		else if (sys->pl_dir == KEY_A)
+			draw_tex(&sys->img, &sys->player_left[0], n, i);
+		else if (sys->pl_dir == KEY_S)
+			draw_tex(&sys->img, &sys->player_down[0], n, i);
+		else if (sys->pl_dir == KEY_D)
+			draw_tex(&sys->img, &sys->player_right[0], n, i);
+	}
+	else
+	{
+		if (sys->pl_dir == KEY_W)
+			draw_tex(&sys->img, &sys->player_up[1], n, i);
+		else if (sys->pl_dir == KEY_A)
+			draw_tex(&sys->img, &sys->player_left[1], n, i);
+		else if (sys->pl_dir == KEY_S)
+			draw_tex(&sys->img, &sys->player_down[1], n, i);
+		else if (sys->pl_dir == KEY_D)
+			draw_tex(&sys->img, &sys->player_right[1], n, i);
+	}
+}
+
 int	game_loop(t_game *game)
 {
 	static int	frame;
 
 	draw_map(&game->map, &game->sys.img, &game->sys, frame);
+	draw_player(&game->sys, frame, game->map.pl_x * TEX_SIZE, game->map.pl_y * TEX_SIZE);
 	draw_count(&game->sys, &game->sys.num, game->map.width, game->count);
+	draw_enemy(&game->sys, frame, &game->map);
 	mlx_put_image_to_window(\
 		game->sys.mlx, game->sys.win, game->sys.img.img, 0, 0);
 	if (frame == ANIME_FRAME * 2)
