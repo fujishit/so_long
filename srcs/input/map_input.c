@@ -19,7 +19,7 @@ static int	get_height(char *path, size_t *height)
 	int		fd;
 	char	*line;
 
-	*height = 1;
+	line = NULL;
 	fd = wrap_open(path);
 	if (fd == -1)
 		return (1);
@@ -97,6 +97,7 @@ int	map_input(char *path, t_map *map)
 {
 	if (extension_check(path, ".ber") == 1)
 		return (1);
+	map->height = 1;
 	if (get_height(path, &map->height) == 1)
 		return (1);
 	if (get_map(path, map->height, &map->map) == 1)

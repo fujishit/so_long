@@ -11,5 +11,10 @@ void	free_map(t_map *map)
 		free(map->map[i]);
 		i++;
 	}
-	free(map);
+}
+
+void	abend_game(t_game *game)
+{
+	free_map(&game->map);
+	exit(1);
 }

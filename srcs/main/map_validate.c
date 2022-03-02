@@ -1,29 +1,121 @@
 #include "so_long.h"
 
-static void	get_pl(char **map, size_t *pl_y, size_t *pl_x)
+static int	get_enemy(t_map *map)
 {
-	int	i;
-	int	n;
+	size_t	i;
+	size_t	n;
 
 	i = 0;
-	while (map[i] != NULL)
+	while (map->map[i] != NULL)
 	{
 		n = 0;
-		while (map[i][n] != '\0')
+		while (map->map[i][n] != '\0')
 		{
-			if (map[i][n] == 'P')
+			if (map->map[i][n] == 'T')
 			{
-				*pl_y = i;
-				*pl_x = n;
+				map->en_y = i;
+				map->en_x = n;
 			}
 			n++;
 		}
 		i++;
 	}
+	return (0);
+}
+
+static int	get_pl(t_map *map)
+{
+	size_t	i;
+	size_t	n;
+
+	i = 0;
+	while (map->map[i] != NULL)
+	{
+		n = 0;
+		while (map->map[i][n] != '\0')
+		{
+			if (map->map[i][n] == 'P')
+			{
+				map->pl_y = i;
+				map->pl_x = n;
+			}
+			n++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+static void	get_item_num(char **map, size_t *item)
+{
+	size_t	i;
+	size_t	n;
+	size_t	num;
+
+	i = 0;
+	num = 0;
+	while (map[i] != NULL)
+	{
+		n = 0;
+		while (map[i][n] != '\0')
+		{
+			if (map[i][n] == 'C')
+				num++;
+			n++;
+		}
+		i++;
+	}
+	*item = num;
+}
+
+static int	multiple_check(t_map *map, char c)
+{
+	size_t	y;
+	size_t	x;
+	size_t		count;
+
+	count = 0;
+	y = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->height)
+		{
+			if (c == map->map[y][x])
+			{
+				count++;
+			}
+			x++;
+		}
+		y++;
+	}
+	return (count);
 }
 
 int	map_validate(t_map *map)
 {
-	get_pl(map->map, &map->pl_y, &map->pl_x);
+	if (get_enemy(map) == 1)
+	{
+		error_print(MAP_ERROR);
+		return (1);
+	}
+	if (get_pl(map) == 1)
+	{
+		error_print(MAP_ERROR);
+		return (1);
+	}
+	if (multiple_check(map, 'E') != 0 || \
+		multiple_check(map, 'P') != 1 || \
+		multiple_check(map, 'C') != 0)
+	{
+		error_print(MAP_ERROR);
+		return (1);
+	}
+	if (map_check(map, map->map) == 1)
+	{
+		error_print(MAP_ERROR);
+		return (1);
+	}
+	get_item_num(map->map, &map->item);
 	return (0);
 }
