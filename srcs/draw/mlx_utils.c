@@ -3,14 +3,14 @@
 
 static int	get_color(t_img *img, int x, int y)
 {
-	return (*(int *)(img->addr + (y * img->size_l + (x * (img->bpp / 8)))));
+	return (*(int *)(img->data + (y * img->size_line + (x * (img->bpp / 8)))));
 }
 
 static void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = img->addr + (y * img->size_l + x * (img->bpp / 8));
+	dst = img->data + (y * img->size_line + x * (img->bpp / 8));
 	*(unsigned int *)dst = color;
 }
 

@@ -24,14 +24,14 @@ int	mlx_setup(t_sys *sys, t_map map)
 		error_print(WINDOW_ERROR);
 		return (1);
 	}
-	sys->img.img = mlx_new_image(sys->mlx, sys->win_width, sys->win_height);
-	if (sys->img.img == NULL)
+	sys->img.image = mlx_new_image(sys->mlx, sys->win_width, sys->win_height);
+	if (sys->img.image == NULL)
 	{
 		error_print(IMAGE_ERROR);
 		return (1);
 	}
-	sys->img.addr = mlx_get_data_addr(\
-		sys->img.img, &sys->img.bpp, &sys->img.size_l, &sys->img.endian);
+	sys->img.data = mlx_get_data_addr(\
+		sys->img.image, &sys->img.bpp, &sys->img.size_line, &sys->img.endian);
 }
 
 	// static size_t n = 0;
@@ -47,8 +47,8 @@ static void	draw_enemy(t_sys *sys, int frame, t_map *map)
 	i = 0;
 	while (i < map->enemy)
 	{
-		// draw_tex(img, &sys->player_up[0], n * TEX_SIZE, i * TEX_SIZE);
-		draw_tex(&sys->img, &sys->player_up[0], map->enemys[i].en_x * TEX_SIZE, map->enemys[i].en_y * TEX_SIZE);
+		draw_tex(&sys->img, &sys->player_up[0], \
+		map->enemies[i].en_x * TEX_SIZE, map->enemies[i].en_y * TEX_SIZE);
 		i++;
 	}
 }
@@ -88,7 +88,7 @@ int	game_loop(t_game *game)
 	draw_count(&game->sys, &game->sys.num, game->map.width, game->count);
 	draw_enemy(&game->sys, frame, &game->map);
 	mlx_put_image_to_window(\
-		game->sys.mlx, game->sys.win, game->sys.img.img, 0, 0);
+		game->sys.mlx, game->sys.win, game->sys.img.image, 0, 0);
 	if (frame == ANIME_FRAME * 2)
 		frame = 0;
 	frame++;
@@ -105,11 +105,11 @@ int	main(int argc, char *argv[])
 	}
 	if (map_input(argv[1], &game.map) == 1)
 		return (1);
+	if (map_validate(&game.map) == 1)
+		abort_exit(&game.map);	//ここまでエラー確認まる
 	mlx_setup(&game.sys, game.map);
 	if (tex_input(&game.sys) == 1)
-		abend_game(&game);
-	if (map_validate(&game.map) == 1)
-		abend_game(&game);
+		abort_exit(&game.map);
 	game.count = 0;
 	mlx_loop_hook(game.sys.mlx, game_loop, &game);
 	mlx_hook(game.sys.win, 2, 1L << 0, game_key, &game);

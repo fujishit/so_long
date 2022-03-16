@@ -11,13 +11,13 @@
 
 typedef struct s_img
 {
-	void		*img;
-	char		*addr;
-	int			size_l;
+	void		*image;
+	char		*data;
+	int			size_line;
 	int			bpp;
 	int			endian;
-	int			img_width;
-	int			img_height;
+	int			width;
+	int			height;
 }	t_img;
 
 typedef struct s_num
@@ -69,7 +69,7 @@ typedef struct	s_map
 	size_t	pl_y;
 	size_t	item;
 	size_t	enemy;
-	t_enemy	*enemys;
+	t_enemy	*enemies;
 }	t_map;
 
 typedef struct	s_game
@@ -90,7 +90,11 @@ int		map_validate(t_map *map);
 int		draw_map(t_map *map, t_img *img, t_sys *sys, int frame);
 void	draw_count(t_sys *sys, t_num *num, size_t width, size_t count);
 void	enemy_move(t_map *map);
-void	abend_game(t_game *game);
 void	free_map(t_map *map);
+void	free_reading_map(char **map, size_t height);
+void	free_enemy(t_map *map);
+
+void	success_exit(t_sys *sys, t_map *map);
+void	abort_exit(t_map *map);
 
 #endif /* SO_LONG_H */

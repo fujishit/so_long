@@ -15,7 +15,7 @@ static void	en_dir(t_map *map, t_enemy *enemy)
 		y_diff = map->pl_y - enemy->en_y;
 	else
 		y_diff = enemy->en_y - map->pl_y;
-	if (map->pl_y < map->pl_x)
+	if (y_diff < x_diff)
 		flag = 0;
 	else
 		flag = 1;
@@ -51,8 +51,8 @@ void	enemy_move(t_map *map)
 	i = 0;
 	while (i < map->enemy)
 	{
-		en_dir(map, map->enemys);
-		en_move(map, map->enemys);
+		en_dir(map, map->enemies);
+		en_move(map, map->enemies);
 		i++;
 	}
 	return ;

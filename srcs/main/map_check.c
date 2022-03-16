@@ -6,24 +6,24 @@ static int	map_isvalid(t_map *m)
 	int	x;
 
 	y = 0;
+	x = 0;
+	while (x < m->width)
+	{
+		if (m->map[0][x] != '1')
+			return (1);
+		else if (m->map[m->height - 1][x] != '1')
+			return (1);
+		x++;
+	}
 	while (y < m->height)
 	{
-		x = 0;
-		while (x < m->width)
-		{
-			if (m->map[y][x] != '1')
-			{
-				if (y == 0 || y == (m->height - 1))
-					return (1);
-				else if (x == 0 || x == (m->width - 1))
-					return (1);
-			}
-			x++;
-		}
-		if (m->map[y][x] == '1')
-			return (MAP_ERROR);
+		if (m->map[y][0]  != '1')
+			return (1);
+		else if (m->map[y][m->width - 1] != '1')
+			return (1);
 		y++;
 	}
+	return (0);
 }
 
 #ifdef BONUS
@@ -40,7 +40,7 @@ static int	chr_isvalid(char c)
 		return (0);
 	else if (c == 'P')
 		return (0);
-	else if (c == 'T')
+	else if (c == 'R')
 		return (0);
 	return (1);
 }
@@ -73,8 +73,6 @@ int	map_check(t_map *m, char **map)
 	while (y < m->height)
 	{
 		x = 0;
-		while (map[y][x] == ' ')
-			x++;
 		while (map[y][x] != '\0')
 		{
 			if (chr_isvalid(map[y][x]) == 1)

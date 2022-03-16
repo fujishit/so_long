@@ -48,6 +48,7 @@ DRAW_SRCS	=	$(addprefix $(DRAW_DIR), $(DRAW_FILES))
 ERROR_DIR 	=	error/
 ERROR_FILES	=	error_print.c \
 				free.c \
+				game_exit.c \
 				#xxxx.c
 ERROR_SRCS	=	$(addprefix $(ERROR_DIR), $(ERROR_FILES))
 

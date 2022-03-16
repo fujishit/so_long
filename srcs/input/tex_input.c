@@ -3,16 +3,16 @@
 
 static int	tex_load(t_img *tex, void *mlx, char *path)
 {
-	tex->img = mlx_xpm_file_to_image(\
-		mlx, path, &tex->img_width, &tex->img_height);
-	if (tex->img == NULL)
+	tex->image = mlx_xpm_file_to_image(\
+		mlx, path, &tex->width, &tex->height);
+	if (tex->image == NULL)
 	{
 		error_print(XPM_LOAD_ERROR);
 		return (1);
 	}
-	tex->addr = mlx_get_data_addr(\
-		tex->img, &tex->bpp, &tex->size_l, &tex->endian);
-	if (tex->addr == NULL)
+	tex->data = mlx_get_data_addr(\
+		tex->image, &tex->bpp, &tex->size_line, &tex->endian);
+	if (tex->data == NULL)
 	{
 		error_print(MLX_ERROR);
 		return (1);

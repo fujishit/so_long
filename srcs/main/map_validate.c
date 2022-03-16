@@ -7,10 +7,12 @@ static int	get_pl(t_map *map)
 	size_t	n;
 
 	i = 0;
-	while (map->map[i] != NULL)
+	map->pl_y = 1;
+	map->pl_x = 1;
+	while (i < map->height)
 	{
 		n = 0;
-		while (map->map[i][n] != '\0')
+		while (n < map->width)
 		{
 			if (map->map[i][n] == 'P')
 			{
@@ -24,7 +26,7 @@ static int	get_pl(t_map *map)
 	return (0);
 }
 
-static void	get_item_num(char **map, size_t *item)
+static void	get_item_num(t_map *map, size_t *item)
 {
 	size_t	i;
 	size_t	n;
@@ -32,12 +34,12 @@ static void	get_item_num(char **map, size_t *item)
 
 	i = 0;
 	num = 0;
-	while (map[i] != NULL)
+	while (i < map->height)
 	{
 		n = 0;
-		while (map[i][n] != '\0')
+		while (n < map->width)
 		{
-			if (map[i][n] == 'C')
+			if (map->map[i][n] == 'C')
 				num++;
 			n++;
 		}
@@ -76,9 +78,9 @@ static int	get_enemy(t_map *map)
 	size_t	x;
 	size_t	count;
 
-	map->enemy = multiple_check(map, 'T');
-	map->enemys = (t_enemy *)malloc(sizeof(t_enemy) * map->enemy);
-	if (map->enemys == NULL)
+	map->enemy = multiple_check(map, 'R');
+	map->enemies = (t_enemy *)malloc(sizeof(t_enemy) * (map->enemy + 1));
+	if (map->enemies == NULL)
 		return (1);
 	y = 0;
 	count = 0;
@@ -87,11 +89,11 @@ static int	get_enemy(t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			if (map->map[y][x] == 'T')
+			if (map->map[y][x] == 'R')
 			{
-				map->enemys[count].en_y = y;
-				map->enemys[count].en_x = x;
-				map->enemys[count].en_dir = KEY_S;
+				map->enemies[count].en_y = y;
+				map->enemies[count].en_x = x;
+				map->enemies[count].en_dir = KEY_S;
 				count++;
 			}
 			x++;
@@ -125,6 +127,6 @@ int	map_validate(t_map *map)
 		error_print(MAP_ERROR);
 		return (1);
 	}
-	get_item_num(map->map, &map->item);
+	get_item_num(map, &map->item);
 	return (0);
 }

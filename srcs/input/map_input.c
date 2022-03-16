@@ -28,8 +28,7 @@ static int	get_height(char *path, size_t *height)
 	{
 		free(line);
 		ret_gnl = get_next_line(fd, &line);
-		if (line[0] != '\0')
-			*height = *height + 1;
+		*height = *height + 1;
 	}
 	free(line);
 	close(fd);
@@ -50,18 +49,19 @@ static int	get_map(char *path, size_t height, char ***map)
 	fd = wrap_open(path);
 	if (fd == -1)
 		return (1);
-	*map = (char **)malloc(sizeof(char *) * (height + 1));
-	(*map)[height] = NULL;
+	*map = (char **)malloc(sizeof(char *) * height);
 	if (*map == NULL)
 	{
 		error_print(MALLOC_ERROR);
 		return (1);
 	}
+	(*map)[0] = NULL;
 	i = 0;
 	while (i < height)
 	{
-		if (get_next_line(fd, &((*map)[i])) == -1)
+		if (get_next_line(fd, &(*map)[i]) == -1)
 		{
+			free_reading_map(map, i);
 			error_print(READ_ERROR);
 			return (1);
 		}
@@ -100,13 +100,20 @@ int	map_input(char *path, t_map *map)
 	map->height = 1;
 	if (get_height(path, &map->height) == 1)
 		return (1);
-	if (get_map(path, map->height, &map->map) == 1)
+	if (map->height == 1)
 	{
-		free_map(map);
 		error_print(MAP_ERROR);
 		return (1);
 	}
+	if (get_map(path, map->height, &map->map) == 1)
+		return (1);
+	if (map->map[map->height - 1][0] == '\0')
+	{
+		free(map->map[map->height]);
+		map->height--;
+	}
 	map->width = ft_strlen(map->map[0]);
+	return (0);
 }
 
 	// debug
