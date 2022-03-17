@@ -50,6 +50,7 @@ typedef struct	s_sys
 	t_img	wall;
 	t_img	tile;
 	t_img	goal;
+	t_img	enemy;
 	int		pl_dir;
 }	t_sys;
 
@@ -82,6 +83,7 @@ typedef struct	s_game
 void	error_print(int error);
 void	game_init(t_game *game);
 int		tex_input(t_sys *sys);
+int		wrap_open(char *path);
 int		map_input(char *path, t_map *map);
 void	draw_tex(t_img *img, t_img *tex, int x, int y);
 int		game_key(int keycode, t_game *game);

@@ -8,7 +8,7 @@ void	draw_enemy(t_sys *sys, int frame, t_map *map)
 	i = 0;
 	while (i < map->enemy)
 	{
-		draw_tex(&sys->img, &sys->player_up[0], \
+		draw_tex(&sys->img, &sys->enemy, \
 		map->enemies[i].en_x * TEX_SIZE, map->enemies[i].en_y * TEX_SIZE);
 		i++;
 	}

@@ -36,6 +36,7 @@ MAIN_SRCS	 =	$(addprefix $(MAIN_DIR), $(MAIN_FILES))
 INPUT_DIR	=	input/
 INPUT_FILES	=	map_input.c \
 				tex_input.c \
+				wrap_open.c \
 				#xxxx.c
 INPUT_SRCS =	$(addprefix $(INPUT_DIR), $(INPUT_FILES))
 

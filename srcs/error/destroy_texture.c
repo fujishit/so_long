@@ -32,4 +32,5 @@ void		destroy_texture(t_sys *sys)
 	wrap_destroy_image(sys->mlx, &sys->wall);
 	wrap_destroy_image(sys->mlx, &sys->tile);
 	wrap_destroy_image(sys->mlx, &sys->goal);
+	wrap_destroy_image(sys->mlx, &sys->enemy);
 }

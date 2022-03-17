@@ -80,5 +80,7 @@ int	tex_input(t_sys *sys)
 		return (1);
 	else if (tex_load(&sys->goal, sys->mlx, GOAL1) == 1)
 		return (1);
+	else if (tex_load(&sys->enemy, sys->mlx, ENEMY1) == 1)
+		return (1);
 	return (0);
 }

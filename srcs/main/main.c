@@ -64,7 +64,7 @@ int	main(int argc, char *argv[])
 	if (map_input(argv[1], &game.map) == 1)
 		return (1);
 	if (map_validate(&game.map) == 1)
-		map_error_exit(&game.map);
+		mlx_error_exit(&game.sys, &game.map);
 	if (mlx_setup(&game.sys, game.map) == 1)
 		mlx_error_exit(&game.sys, &game.map);
 	if (tex_input(&game.sys) == 1)

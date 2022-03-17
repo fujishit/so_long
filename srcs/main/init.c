@@ -26,6 +26,7 @@ static void	tex_init(t_sys *sys)
 	sys->wall.image = NULL;
 	sys->tile.image = NULL;
 	sys->goal.image = NULL;
+	sys->enemy.image = NULL;
 }
 
 static void	sys_init(t_sys *sys)

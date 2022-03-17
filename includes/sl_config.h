@@ -1,7 +1,7 @@
 #ifndef SL_KEY_H
 # define SL_KEY_H
 
-# define ANIME_FRAME 5
+# define ANIME_FRAME 200
 
 # define KEY_ESC 65307
 # define KEY_W 119
@@ -24,6 +24,7 @@
 # define WALL1 "./texture/wall/wood_wall1.xpm"
 # define TILE1 "./texture/tile/grass_tile1.xpm"
 # define GOAL1 "./texture/goal/home.xpm"
+# define ENEMY1 "./texture/enemy/bomb.xpm"
 # define NUMBER0 "./texture/number/0.xpm"
 # define NUMBER1 "./texture/number/1.xpm"
 # define NUMBER2 "./texture/number/2.xpm"
