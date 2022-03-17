@@ -107,7 +107,7 @@ int	map_validate(t_map *map)
 {
 	if (get_enemy(map) == 1)
 	{
-		error_print(MAP_ERROR);
+		error_print(MALLOC_ERROR);
 		return (1);
 	}
 	if (get_pl(map) == 1)

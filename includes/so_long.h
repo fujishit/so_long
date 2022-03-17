@@ -80,6 +80,7 @@ typedef struct	s_game
 }	t_game;
 
 void	error_print(int error);
+void	game_init(t_game *game);
 int		tex_input(t_sys *sys);
 int		map_input(char *path, t_map *map);
 void	draw_tex(t_img *img, t_img *tex, int x, int y);
@@ -88,13 +89,18 @@ void	draw_count(t_sys *sys, t_num *num, size_t width, size_t count);
 int		map_check(t_map *m, char **map);
 int		map_validate(t_map *map);
 int		draw_map(t_map *map, t_img *img, t_sys *sys, int frame);
+void	draw_collect(t_sys *sys, int frame, int n, int i);
+void	draw_player(t_sys *sys, int frame, int n, int i);
+void	draw_enemy(t_sys *sys, int frame, t_map *map);
 void	draw_count(t_sys *sys, t_num *num, size_t width, size_t count);
 void	enemy_move(t_map *map);
 void	free_map(t_map *map);
 void	free_reading_map(char **map, size_t height);
 void	free_enemy(t_map *map);
+void	destroy_texture(t_sys *sys);
 
 void	success_exit(t_sys *sys, t_map *map);
-void	abort_exit(t_map *map);
+void	map_error_exit(t_map *map);
+void	mlx_error_exit(t_sys *sys, t_map *map);
 
 #endif /* SO_LONG_H */

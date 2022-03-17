@@ -17,7 +17,6 @@ static char *bfe9d87ee0f24f5bbfbd9e373d5e07d6L0EZVC57mmtFsckr[] = {
 "= c #DCDCE5",
 "- c #EDEDFC",
 /* pixels */
-"                                ",
 "             .....              ",
 "           ..@&&&@..            ",
 "          .&@****&@&.           ",
@@ -48,5 +47,6 @@ static char *bfe9d87ee0f24f5bbfbd9e373d5e07d6L0EZVC57mmtFsckr[] = {
 "      ... .Xo**+**oX. ...       ",
 "           ..oo*oo..            ",
 "              o*o               ",
-"               o                "
+"               o                ",
+"                                "
 };

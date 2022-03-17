@@ -3,7 +3,7 @@
 
 int	close_window(int keycode, t_game *game)
 {
-	exit(0);
+	success_exit(&game->sys, &game->map);
 }
 
 int	mlx_setup(t_sys *sys, t_map map)
@@ -31,52 +31,8 @@ int	mlx_setup(t_sys *sys, t_map map)
 		return (1);
 	}
 	sys->img.data = mlx_get_data_addr(\
-		sys->img.image, &sys->img.bpp, &sys->img.size_line, &sys->img.endian);
-}
-
-	// static size_t n = 0;
-	// if (n++ == 1)
-	// {
-	// 	game->count = 9999999999999;
-	// }
-
-static void	draw_enemy(t_sys *sys, int frame, t_map *map)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < map->enemy)
-	{
-		draw_tex(&sys->img, &sys->player_up[0], \
-		map->enemies[i].en_x * TEX_SIZE, map->enemies[i].en_y * TEX_SIZE);
-		i++;
-	}
-}
-
-static void	draw_player(t_sys *sys, int frame, int n, int i)
-{
-	if (frame < ANIME_FRAME)
-	{
-		if (sys->pl_dir == KEY_W)
-			draw_tex(&sys->img, &sys->player_up[0], n, i);
-		else if (sys->pl_dir == KEY_A)
-			draw_tex(&sys->img, &sys->player_left[0], n, i);
-		else if (sys->pl_dir == KEY_S)
-			draw_tex(&sys->img, &sys->player_down[0], n, i);
-		else if (sys->pl_dir == KEY_D)
-			draw_tex(&sys->img, &sys->player_right[0], n, i);
-	}
-	else
-	{
-		if (sys->pl_dir == KEY_W)
-			draw_tex(&sys->img, &sys->player_up[1], n, i);
-		else if (sys->pl_dir == KEY_A)
-			draw_tex(&sys->img, &sys->player_left[1], n, i);
-		else if (sys->pl_dir == KEY_S)
-			draw_tex(&sys->img, &sys->player_down[1], n, i);
-		else if (sys->pl_dir == KEY_D)
-			draw_tex(&sys->img, &sys->player_right[1], n, i);
-	}
+		sys->img.image, &sys->img.bpp, &sys->img.size_line, &sys->img.endian);	
+	return (0);
 }
 
 int	game_loop(t_game *game)
@@ -103,14 +59,16 @@ int	main(int argc, char *argv[])
 		error_print(ARG_ERROR);
 		return (1);
 	}
+	game_init(&game);
+	game.count = 0;
 	if (map_input(argv[1], &game.map) == 1)
 		return (1);
 	if (map_validate(&game.map) == 1)
-		abort_exit(&game.map);	//ここまでエラー確認まる
-	mlx_setup(&game.sys, game.map);
+		map_error_exit(&game.map);
+	if (mlx_setup(&game.sys, game.map) == 1)
+		mlx_error_exit(&game.sys, &game.map);
 	if (tex_input(&game.sys) == 1)
-		abort_exit(&game.map);
-	game.count = 0;
+		mlx_error_exit(&game.sys, &game.map);
 	mlx_loop_hook(game.sys.mlx, game_loop, &game);
 	mlx_hook(game.sys.win, 2, 1L << 0, game_key, &game);
 	mlx_hook(game.sys.win, 33, 1L << 17, close_window, &game);

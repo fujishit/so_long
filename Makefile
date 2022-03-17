@@ -28,7 +28,8 @@ MAIN_FILES	=	main.c \
 				game_key.c \
 				map_validate.c \
 				map_check.c \
-				enemy_move.c
+				enemy_move.c \
+				init.c \
 				#xxxx.c
 MAIN_SRCS	 =	$(addprefix $(MAIN_DIR), $(MAIN_FILES))
 
@@ -49,6 +50,7 @@ ERROR_DIR 	=	error/
 ERROR_FILES	=	error_print.c \
 				free.c \
 				game_exit.c \
+				destroy_texture.c \
 				#xxxx.c
 ERROR_SRCS	=	$(addprefix $(ERROR_DIR), $(ERROR_FILES))
 

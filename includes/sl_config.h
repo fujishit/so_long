@@ -1,7 +1,7 @@
 #ifndef SL_KEY_H
 # define SL_KEY_H
 
-# define ANIME_FRAME 50
+# define ANIME_FRAME 5
 
 # define KEY_ESC 65307
 # define KEY_W 119

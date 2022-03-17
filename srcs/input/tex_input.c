@@ -66,7 +66,6 @@ static int	input_number(t_sys *sys)
 
 int	tex_input(t_sys *sys)
 {
-	sys->pl_dir = KEY_W;
 	if (input_player(sys) == 1)
 		return (1);
 	else if (input_number(sys) == 1)

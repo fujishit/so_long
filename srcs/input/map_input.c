@@ -61,7 +61,7 @@ static int	get_map(char *path, size_t height, char ***map)
 	{
 		if (get_next_line(fd, &(*map)[i]) == -1)
 		{
-			free_reading_map(map, i);
+			free_reading_map(*map, i);
 			error_print(READ_ERROR);
 			return (1);
 		}
@@ -109,14 +109,10 @@ int	map_input(char *path, t_map *map)
 		return (1);
 	if (map->map[map->height - 1][0] == '\0')
 	{
-		free(map->map[map->height]);
+		free(map->map[map->height - 1]);
+		map->map[map->height - 1] = NULL;
 		map->height--;
 	}
 	map->width = ft_strlen(map->map[0]);
 	return (0);
 }
-
-	// debug
-	// printf("map: height = [%ld], width = [%ld]\n", map->height, map->width);
-	// for (int i = 0; i < map->height; i++)
-	// 	printf("[%s]\n", map->map[i]);
