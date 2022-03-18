@@ -1,5 +1,5 @@
-#ifndef SL_KEY_H
-# define SL_KEY_H
+#ifndef SL_CONFIG_H
+# define SL_CONFIG_H
 
 # define ANIME_FRAME 200
 

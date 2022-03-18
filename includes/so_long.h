@@ -34,7 +34,7 @@ typedef struct s_num
 	t_img	num9;
 }	t_num;
 
-typedef struct	s_sys
+typedef struct s_sys
 {
 	void	*mlx;
 	void	*win;
@@ -54,14 +54,14 @@ typedef struct	s_sys
 	int		pl_dir;
 }	t_sys;
 
-typedef struct	s_enemy
+typedef struct s_enemy
 {
 	size_t	en_x;
 	size_t	en_y;
 	int		en_dir;
 }	t_enemy;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	char	**map;
 	size_t	height;
@@ -73,7 +73,7 @@ typedef struct	s_map
 	t_enemy	*enemies;
 }	t_map;
 
-typedef struct	s_game
+typedef struct s_game
 {
 	t_map	map;
 	t_sys	sys;
