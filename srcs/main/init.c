@@ -39,7 +39,7 @@ static void	sys_init(t_sys *sys)
 	sys->pl_dir = KEY_W;
 }
 
-void		game_init(t_game *game)
+void	game_init(t_game *game)
 {
 	game->count = 0;
 	sys_init(&game->sys);

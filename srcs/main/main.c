@@ -31,7 +31,7 @@ int	mlx_setup(t_sys *sys, t_map map)
 		return (1);
 	}
 	sys->img.data = mlx_get_data_addr(\
-		sys->img.image, &sys->img.bpp, &sys->img.size_line, &sys->img.endian);	
+		sys->img.image, &sys->img.bpp, &sys->img.size_line, &sys->img.endian);
 	return (0);
 }
 
@@ -40,7 +40,8 @@ int	game_loop(t_game *game)
 	static int	frame;
 
 	draw_map(&game->map, &game->sys.img, &game->sys, frame);
-	draw_player(&game->sys, frame, game->map.pl_x * TEX_SIZE, game->map.pl_y * TEX_SIZE);
+	draw_player(&game->sys, frame, game->map.pl_x * TEX_SIZE, \
+		game->map.pl_y * TEX_SIZE);
 	draw_count(&game->sys, &game->sys.num, game->map.width, game->count);
 	draw_enemy(&game->sys, frame, &game->map);
 	mlx_put_image_to_window(\

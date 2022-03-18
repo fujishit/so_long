@@ -56,7 +56,6 @@ static int	get_map(char *path, size_t height, char ***map)
 		error_print(MALLOC_ERROR);
 		return (1);
 	}
-	(*map)[0] = NULL;
 	i = 0;
 	while (i < height)
 	{

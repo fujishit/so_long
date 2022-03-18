@@ -6,7 +6,7 @@ static void	wrap_destroy_image(void *mlx, t_img *img)
 		mlx_destroy_image(mlx, img->image);
 }
 
-void		destroy_texture(t_sys *sys)
+void	destroy_texture(t_sys *sys)
 {
 	wrap_destroy_image(sys->mlx, &sys->img);
 	wrap_destroy_image(sys->mlx, &sys->num.num0);

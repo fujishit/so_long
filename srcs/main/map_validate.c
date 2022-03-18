@@ -72,10 +72,8 @@ static int	multiple_check(t_map *map, char c)
 	return (count);
 }
 
-static int	get_enemy(t_map *map)
+static int	get_enemy(t_map *map, size_t y, size_t x)
 {
-	size_t	y;
-	size_t	x;
 	size_t	count;
 
 	map->enemy = multiple_check(map, 'R');
@@ -105,7 +103,7 @@ static int	get_enemy(t_map *map)
 
 int	map_validate(t_map *map)
 {
-	if (get_enemy(map) == 1)
+	if (get_enemy(map, 0, 0) == 1)
 	{
 		error_print(MALLOC_ERROR);
 		return (1);

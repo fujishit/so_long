@@ -17,7 +17,7 @@ static int	map_isvalid(t_map *m)
 	}
 	while (y < m->height)
 	{
-		if (m->map[y][0]  != '1')
+		if (m->map[y][0] != '1')
 			return (1);
 		else if (m->map[y][m->width - 1] != '1')
 			return (1);
