@@ -23,5 +23,5 @@ void	mlx_error_exit(t_sys *sys, t_map *map)
 	if (sys->mlx != NULL)
 		mlx_destroy_display(sys->mlx);
 	free(sys->mlx);
-	exit(0);
+	exit(1);
 }

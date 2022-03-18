@@ -3,7 +3,10 @@
 
 int	close_window(int keycode, t_game *game)
 {
-	success_exit(&game->sys, &game->map);
+	(void)keycode;
+	(void)game;
+	exit(0);
+	return (0);
 }
 
 int	mlx_setup(t_sys *sys, t_map map)
@@ -49,6 +52,7 @@ int	game_loop(t_game *game)
 	if (frame == ANIME_FRAME * 2)
 		frame = 0;
 	frame++;
+	return (0);
 }
 
 int	main(int argc, char *argv[])

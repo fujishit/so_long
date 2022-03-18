@@ -8,7 +8,7 @@ MLX = libmlx_Linux.a
 # ****************************************************************************
 
 CC = gcc
-CFLAGS = $(INCLUDE) #-Wall -Werror -Wextra
+CFLAGS = $(INCLUDE) -Wall -Werror -Wextra
 INCLUDE = -I includes/ -I $(LIB_DIR)/includes/ -I $(MLX_DIR)/
 DEBUG = -g -fsanitize=address
 MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm

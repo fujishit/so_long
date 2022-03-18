@@ -5,6 +5,7 @@ void	draw_enemy(t_sys *sys, int frame, t_map *map)
 {
 	size_t	i;
 
+	(void)frame;
 	i = 0;
 	while (i < map->enemy)
 	{
@@ -50,8 +51,8 @@ void	draw_collect(t_sys *sys, int frame, int n, int i)
 
 int	draw_map(t_map *map, t_img *img, t_sys *sys, int frame)
 {
-	int			i;
-	int			n;
+	size_t	i;
+	size_t	n;
 
 	i = 0;
 	while (i < map->height)
@@ -70,4 +71,5 @@ int	draw_map(t_map *map, t_img *img, t_sys *sys, int frame)
 		}
 		i++;
 	}
+	return (0);
 }

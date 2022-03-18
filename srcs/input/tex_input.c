@@ -38,6 +38,7 @@ static int	input_player(t_sys *sys)
 		return (1);
 	else if (tex_load(&sys->player_down[1], sys->mlx, PLAYER_DOWN2) == 1)
 		return (1);
+	return (0);
 }
 
 static int	input_number(t_sys *sys)
@@ -62,6 +63,7 @@ static int	input_number(t_sys *sys)
 		return (1);
 	else if (tex_load(&sys->num.num9, sys->mlx, NUMBER9) == 1)
 		return (1);
+	return (0);
 }
 
 int	tex_input(t_sys *sys)

@@ -2,8 +2,8 @@
 
 static int	map_isvalid(t_map *m)
 {
-	int	y;
-	int	x;
+	size_t	y;
+	size_t	x;
 
 	y = 0;
 	x = 0;

@@ -27,6 +27,7 @@ static t_img	*select_number(size_t num, t_num *nums)
 		return (&nums->num8);
 	else if (num == 9)
 		return (&nums->num9);
+	return (&nums->num0);
 }
 
 void	draw_count(t_sys *sys, t_num *num, size_t width, size_t count)
