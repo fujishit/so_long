@@ -51,8 +51,8 @@ void	enemy_move(t_map *map)
 	i = 0;
 	while (i < map->enemy)
 	{
-		en_dir(map, map->enemies);
-		en_move(map, map->enemies);
+		en_dir(map, &map->enemies[i]);
+		en_move(map, &map->enemies[i]);
 		i++;
 	}
 	return ;
