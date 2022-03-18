@@ -1,11 +1,20 @@
 #include "get_next_line.h"
 
-int	get_next_line(int fd, char **line)
+int	free_save(char **save)
+{
+	free(*save);
+	*save = NULL;
+	return (0);
+}
+
+int	get_next_line(int fd, char **line, int end)
 {
 	static char	*save;
 	int			ret;
 
 	ret = 0;
+	if (end == 1)
+		return (free_save(&save));
 	if (line == NULL || fd < 0 || 256 <= fd || BUFFER_SIZE <= 0)
 		return (-1);
 	if (save == NULL || (gnl_strchr(save, '\n')) == NULL)
@@ -21,10 +30,7 @@ int	get_next_line(int fd, char **line)
 		ret = gnl_save(&save, line);
 	}
 	if (ret == 0)
-	{
-		free(save);
-		save = NULL;
-	}
+		return (free_save(&save));
 	return (ret);
 }
 

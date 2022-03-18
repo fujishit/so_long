@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-int		get_next_line(int fd, char **line);
+int		get_next_line(int fd, char **line, int end);
 int		gnl_read(int fd, char **save);
 int		gnl_save(char **save, char **line);
 int		free_return(void *buf, int ret);

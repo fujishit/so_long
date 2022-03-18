@@ -55,11 +55,9 @@ int	game_key(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
 		success_exit(&game->sys, &game->map);
-	enemy_move(&game->map);
-	if (check_enemy(&game->map) == 1)
-		success_exit(&game->sys, &game->map);
 	if (chara_move(keycode, &game->map) == 1)
 	{
+		enemy_move(&game->map);
 		if (check_enemy(&game->map) == 1)
 			success_exit(&game->sys, &game->map);
 		game->sys.pl_dir = keycode;
